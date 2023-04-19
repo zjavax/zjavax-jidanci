@@ -1,0 +1,20 @@
+[
+  {
+    "_class": "cn.zjavax.zjavaxjidanci.Danci",
+    "id": 1,
+    "danci": "A",
+    "know": 0
+  },
+  {
+    "_class": "cn.zjavax.zjavaxjidanci.Danci",
+    "id": 2,
+    "danci": "B",
+    "know": 0
+  },
+  {
+    "_class": "cn.zjavax.zjavaxjidanci.Danci",
+    "id": 3,
+    "danci": "C",
+    "know": 0
+  }
+]
