@@ -22,8 +22,16 @@ public class JidanciApi {
 //    private EasydanciRepository  easydanciRepository;
 
     @GetMapping("/getDanci")
-    List<Danci> getDanci(@RequestParam(value = "difficulty", required = false) int difficulty) {
-        return jidanciRepository.findByDifficulty(difficulty, Sort.by("know").descending());
+    List<Danci> getDanci(@RequestParam(value = "difficulty", required = false) int difficulty,
+                         @RequestParam(value = "sort", required = false) String sort) {
+        if ("desc".equals(sort)){
+            return jidanciRepository.findByDifficulty(difficulty, Sort.by("know").descending());
+        }else if("asc".equals(sort)){
+            return jidanciRepository.findByDifficulty(difficulty, Sort.by("know").ascending());
+        }else if("no".equals(sort)){
+            return jidanciRepository.findByDifficulty(difficulty, Sort.by("danci").ascending());
+        }
+        return new ArrayList<>();
     }
 
     @DeleteMapping("/danci/deleteById/{id}")
@@ -74,9 +82,42 @@ public class JidanciApi {
 
     }
 
-    // 按行 分割
+
+    // 给单词添加含义，使用gpt解释
     @PostMapping ("/alldancigroup")
     public void putDanciGroupById(@RequestBody Input input) {
+        list = (List<Danci>) jidanciRepository.findAll();
+        for (Danci danci : list) {
+            map.put(danci.getDanci(),danci);
+        }
+
+        String alldanci = input.getAlldancigroup();
+
+        String[] rowArr =  alldanci.trim().split("\\n+");
+
+        List<Danci> danciList = new ArrayList<>();
+        for (String row:rowArr){
+            String[] alldanciArray = row.trim().split(":");
+            Danci danciRow = map.get(alldanciArray[0].trim());
+            if (danciRow == null) {
+                continue;
+            } else {
+                danciRow.setChinese(alldanciArray[1].trim());
+                danciList.add(danciRow);
+            }
+
+
+        }
+
+        jidanciRepository.saveAll(danciList);
+        map.clear();
+
+    }
+
+
+    // 按行 分割
+    @PostMapping ("/alldancigroup2")
+    public void putDanciGroupById2(@RequestBody Input input) {
 
         String alldanci = input.getAlldancigroup();
 //        String[] alldanciArray = alldanci.split("\\n");  // 分行
