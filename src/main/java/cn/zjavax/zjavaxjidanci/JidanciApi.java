@@ -1,5 +1,6 @@
 package cn.zjavax.zjavaxjidanci;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
@@ -63,7 +64,7 @@ public class JidanciApi {
             for (String danci:alldanciArray){
                 Danci danciRow = new Danci();
                 danciRow.setDanci(danci.trim());
-                danciRow.setDifficulty(1);
+                danciRow.setDifficulty(0);
 
 
 
@@ -82,7 +83,7 @@ public class JidanciApi {
 
     }
 
-
+    // 格式：单词 或者 单词:中文，支持多行
     // 给单词添加含义，使用gpt解释
     @PostMapping ("/alldancigroup")
     public void putDanciGroupById(@RequestBody Input input) {
@@ -100,12 +101,22 @@ public class JidanciApi {
             String[] alldanciArray = row.trim().split(":");
             Danci danciRow = map.get(alldanciArray[0].trim());
             if (danciRow == null) {
-                continue;
+                Danci danci = new Danci();
+                danci.setDifficulty(input.difficulty);
+                danci.setDanci(alldanciArray[0].trim());
+                if(alldanciArray.length>1){
+                    danci.setChinese(alldanciArray[1].trim());
+                }
+                danciList.add(danci);
+                map.put(alldanciArray[0].trim(),danci);
+
             } else {
-                danciRow.setChinese(alldanciArray[1].trim());
+                if(alldanciArray.length>1){
+                    danciRow.setChinese(alldanciArray[1].trim());
+                }
+                danciRow.setDifficulty(input.difficulty);
                 danciList.add(danciRow);
             }
-
 
         }
 
@@ -199,32 +210,10 @@ public class JidanciApi {
 
 }
 
+@Data
 class Input{
     String alldanci;
     String alldancigroup;
     String article;
-
-    public String getAlldanci() {
-        return alldanci;
-    }
-
-    public void setAlldanci(String alldanci) {
-        this.alldanci = alldanci;
-    }
-
-    public String getAlldancigroup() {
-        return alldancigroup;
-    }
-
-    public void setAlldancigroup(String alldancigroup) {
-        this.alldancigroup = alldancigroup;
-    }
-
-    public String getArticle() {
-        return article;
-    }
-
-    public void setArticle(String article) {
-        this.article = article;
-    }
+    int difficulty;
 }
