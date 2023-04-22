@@ -98,8 +98,8 @@ public class JidanciApi {
 
         List<Danci> danciList = new ArrayList<>();
         for (String row:rowArr){
-            String[] alldanciArray = row.trim().split(":");
-            Danci danciRow = map.get(alldanciArray[0].trim());
+            String[] alldanciArray = row.trim().split("::|：：");
+            Danci danciRow = map.get(alldanciArray[0].trim().toLowerCase(Locale.ROOT));
             if (danciRow == null) {
                 Danci danci = new Danci();
                 danci.setDifficulty(input.difficulty);
