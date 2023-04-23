@@ -35,6 +35,11 @@ public class JidanciApi {
         return new ArrayList<>();
     }
 
+    @GetMapping("/searchWords")
+    List<Danci> searchWords(String searchWords) {
+        return jidanciRepository.findByDanciLike("%"+searchWords+"%");
+    }
+
     @DeleteMapping("/danci/deleteById/{id}")
     public void deleteById(@PathVariable(value = "id") int id) {
         jidanciRepository.deleteById(id);
@@ -187,7 +192,7 @@ public class JidanciApi {
 
             if(danci1 == null){
                 danciRow.setDanci(danci);
-                danciRow.setDifficulty(0);
+                danciRow.setDifficulty(10);
                 map.put(danci,danciRow);
                 danciList.add(danciRow);
             } else {
