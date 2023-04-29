@@ -3,6 +3,7 @@ package cn.zjavax.zjavaxjidanci;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -30,10 +31,50 @@ public class JidanciApi {
         }else if("asc".equals(sort)){
             return jidanciRepository.findByDifficulty(difficulty, Sort.by("know").ascending());
         }else if("no".equals(sort)){
-            return jidanciRepository.findByDifficulty(difficulty, Sort.by("danci").ascending());
+            List<Danci> danciList = jidanciRepository.findByDifficulty(difficulty, Sort.by("danci").ascending());
+            if(difficulty == 10){
+                printDanci(danciList);
+            }
+
+            return danciList;
         }
         return new ArrayList<>();
     }
+
+
+//    单词查询{英语单词查询解释}
+//    请对Text以表格返回：
+//    项目|结果
+//    翻译成英文
+//    国际音标
+//    词性
+//    词形
+//    中文解释
+//    词根词缀
+//    例句1(英-中)
+//    例句2
+//    例句3
+//    Text: """effect"""
+    public static void printDanci(List<Danci> danciList) {
+        System.out.println("==========================================");
+        System.out.println("单词查询{英语单词查询解释}");
+        System.out.println("请对Text以表格返回：");
+        System.out.println("项目|结果");
+        System.out.println("翻译成英文");
+        System.out.println("词形");
+        System.out.println("中文解释");
+        System.out.println("词根词缀");
+        System.out.println("例句1(英-中)");
+        System.out.println("例句2(英-中)");
+        System.out.println("例句3(英-中)");
+
+        danciList.forEach(d ->{
+            if (!StringUtils.isEmpty(d.danci)){
+                System.out.println("Text: \"\"\""+d.danci+"\"\"\"");
+            }
+        });
+    }
+
 
     @GetMapping("/searchWords")
     List<Danci> searchWords(String searchWords) {
@@ -49,6 +90,13 @@ public class JidanciApi {
     public void putById(@RequestBody Danci danci) {
         jidanciRepository.save(danci);
     }
+
+    @PostMapping("/addAll")
+//    @ResponseBody
+    public List<Danci> addAll(@RequestBody List<Danci> dicts){
+        return (List<Danci>) jidanciRepository.saveAll(dicts);
+    }
+
 
 
 //    空格 分割

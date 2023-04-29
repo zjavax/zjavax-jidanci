@@ -7,7 +7,10 @@ import java.util.Objects;
 @Entity
 //@Table(name="danci")
 //@Table(name="danci2")
-@Table(name="danci3")  // 文章
+//@Table(name="danci3")  // 文章
+//@Table(name="anhui_zhongkao")  // 安徽中考
+//@Table(name="danci3000")
+@Table(name="suffix_word")
 public class Danci implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
