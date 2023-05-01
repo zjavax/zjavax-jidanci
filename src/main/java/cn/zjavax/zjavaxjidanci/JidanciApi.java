@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 
-@RestController
+@RestController()
 public class JidanciApi {
 
     @Autowired
@@ -31,7 +31,7 @@ public class JidanciApi {
         }else if("asc".equals(sort)){
             return jidanciRepository.findByDifficulty(difficulty, Sort.by("know").ascending());
         }else if("no".equals(sort)){
-            List<Danci> danciList = jidanciRepository.findByDifficulty(difficulty, Sort.by("danci").ascending());
+            List<Danci> danciList = jidanciRepository.findByDifficulty(difficulty, Sort.by("name").ascending());
             if(difficulty == 10){
                 printDanci(danciList);
             }
@@ -69,8 +69,8 @@ public class JidanciApi {
         System.out.println("例句3(英-中)");
 
         danciList.forEach(d ->{
-            if (!StringUtils.isEmpty(d.danci)){
-                System.out.println("Text: \"\"\""+d.danci+"\"\"\"");
+            if (!StringUtils.isEmpty(d.name)){
+                System.out.println("Text: \"\"\""+d.name+"\"\"\"");
             }
         });
     }
@@ -78,7 +78,7 @@ public class JidanciApi {
 
     @GetMapping("/searchWords")
     List<Danci> searchWords(String searchWords) {
-        return jidanciRepository.findByDanciLike("%"+searchWords+"%");
+        return jidanciRepository.findByNameLike("%"+searchWords+"%");
     }
 
     @DeleteMapping("/danci/deleteById/{id}")
@@ -116,7 +116,7 @@ public class JidanciApi {
 
             for (String danci:alldanciArray){
                 Danci danciRow = new Danci();
-                danciRow.setDanci(danci.trim());
+                danciRow.setName(danci.trim());
                 danciRow.setDifficulty(0);
 
 
@@ -142,7 +142,7 @@ public class JidanciApi {
     public void putDanciGroupById(@RequestBody Input input) {
         list = (List<Danci>) jidanciRepository.findAll();
         for (Danci danci : list) {
-            map.put(danci.getDanci(),danci);
+            map.put(danci.getName(),danci);
         }
 
         String alldanci = input.getAlldancigroup();
@@ -156,16 +156,16 @@ public class JidanciApi {
             if (danciRow == null) {
                 Danci danci = new Danci();
                 danci.setDifficulty(input.difficulty);
-                danci.setDanci(alldanciArray[0].trim());
+                danci.setName(alldanciArray[0].trim());
                 if(alldanciArray.length>1){
-                    danci.setChinese(alldanciArray[1].trim());
+                    danci.setTrans(alldanciArray[1].trim());
                 }
                 danciList.add(danci);
                 map.put(alldanciArray[0].trim(),danci);
 
             } else {
                 if(alldanciArray.length>1){
-                    danciRow.setChinese(alldanciArray[1].trim());
+                    danciRow.setTrans(alldanciArray[1].trim());
                 }
                 danciRow.setDifficulty(input.difficulty);
                 danciList.add(danciRow);
@@ -195,7 +195,7 @@ public class JidanciApi {
 
             for (String danci:alldanciArray){
                 Danci danciRow = new Danci();
-                danciRow.setDanci(danci.trim());
+                danciRow.setName(danci.trim());
                 danciRow.setDifficulty(1);
 
 
@@ -223,7 +223,7 @@ public class JidanciApi {
     public void addArticle(@RequestBody Input input) {
         list = (List<Danci>) jidanciRepository.findAll();
         for (Danci danci : list) {
-            map.put(danci.getDanci(),danci);
+            map.put(danci.getName(),danci);
         }
 
         String article = input.getArticle();
@@ -239,7 +239,7 @@ public class JidanciApi {
             Danci danciRow = new Danci();
 
             if(danci1 == null){
-                danciRow.setDanci(danci);
+                danciRow.setName(danci);
                 danciRow.setDifficulty(10);
                 map.put(danci,danciRow);
                 danciList.add(danciRow);

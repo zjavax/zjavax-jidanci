@@ -10,8 +10,9 @@ public interface JidanciRepository extends CrudRepository<Danci, Integer> {
 
     List<Danci> findByDifficulty(int difficulty, Sort sort);
     List<Danci>  findByDifficulty(int difficulty);
-    List<Danci> findByDanciLike(String danci);
+    List<Danci> findByNameLike(String name);
 //    findByDifficultyByOrderByKnowDesc
+
 
 
 

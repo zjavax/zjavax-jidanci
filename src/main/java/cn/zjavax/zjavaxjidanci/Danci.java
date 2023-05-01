@@ -2,23 +2,30 @@ package cn.zjavax.zjavaxjidanci;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 //@Table(name="danci")
-//@Table(name="danci2")
 //@Table(name="danci3")  // 文章
+//@Table(name="danci2")
 //@Table(name="anhui_zhongkao")  // 安徽中考
 //@Table(name="danci3000")
-@Table(name="suffix_word")
+//@Table(name="suffix_word")
+//@Table(name="top250adv")
+//@Table(name="top500adj")
+@Table(name="top2000words")
+//@Table
 public class Danci implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    public  String danci;
-    public  String chinese;
+    public int id;
+    public  String name;
+    public  String trans;
     public  int know = 1;
-    public int difficulty = 1;
+    public int difficulty = 0;
+    public  String notes;
+
+    // 表名
+//    public String tableName;
 
     public Danci() {
     }
@@ -29,22 +36,6 @@ public class Danci implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getDanci() {
-        return danci;
-    }
-
-    public void setDanci(String danci) {
-        this.danci = danci;
-    }
-
-    public String getChinese() {
-        return chinese;
-    }
-
-    public void setChinese(String chinese) {
-        this.chinese = chinese;
     }
 
     public int getKnow() {
@@ -63,7 +54,31 @@ public class Danci implements Serializable {
         this.difficulty = difficulty;
     }
 
-//    @Override
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTrans() {
+        return trans;
+    }
+
+    public void setTrans(String trans) {
+        this.trans = trans;
+    }
+
+    //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) return true;
 //        if (o == null || getClass() != o.getClass()) return false;
