@@ -91,14 +91,6 @@ public class JidanciApi {
         jidanciRepository.save(danci);
     }
 
-    @PostMapping("/addAll")
-//    @ResponseBody
-    public List<Danci> addAll(@RequestBody List<Danci> dicts){
-        return (List<Danci>) jidanciRepository.saveAll(dicts);
-    }
-
-
-
 //    空格 分割
     @PostMapping ("/alldanci")
     public void addDanci(@RequestBody Input input) {
@@ -216,6 +208,31 @@ public class JidanciApi {
 
     }
 
+    @PostMapping("/addAll")
+//    @ResponseBody
+    public List<Danci> addAll(@RequestBody List<Danci> dicts){
+        list = (List<Danci>) jidanciRepository.findAll();
+        for (Danci danci : list) {
+            for(Danci d:dicts){
+                if (danci.name.equalsIgnoreCase(d.name)){
+                    d.setId(danci.getId());
+                    d.setKnow(danci.getKnow());
+                    d.setDifficulty(danci.getDifficulty());
+                    d.setNotes(danci.getNotes());
+                    if(StringUtils.isEmpty(danci.getTrans())){
+//                        d.setTrans(d.getTrans());
+                    } else {
+                        d.setTrans(danci.getTrans());
+                    }
+
+                }
+            }
+            map.put(danci.getName(),danci);
+        }
+
+
+        return (List<Danci>) jidanciRepository.saveAll(dicts);
+    }
 
 
     // 按行 分割

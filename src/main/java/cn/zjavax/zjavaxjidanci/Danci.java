@@ -8,12 +8,12 @@ import java.io.Serializable;
 //@Table(name="danci3")  // 文章
 //@Table(name="danci2")
 //@Table(name="anhui_zhongkao")  // 安徽中考
-//@Table(name="danci3000")
+@Table(name="danci3000")
 //@Table(name="suffix_word")
 //@Table(name="top250adv")
 //@Table(name="top500adj")
-@Table(name="top2000words")
-//@Table
+//@Table(name="top2000words")
+//@Table(name="nce_1")
 public class Danci implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Danci implements Serializable {
     public  String name;
     public  String trans;
     public  int know = 1;
-    public int difficulty = 0;
+    public int difficulty = 10;  // 初始化
     public  String notes;
 
     // 表名
@@ -78,7 +78,7 @@ public class Danci implements Serializable {
         this.trans = trans;
     }
 
-    //    @Override
+//    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) return true;
 //        if (o == null || getClass() != o.getClass()) return false;
