@@ -78,7 +78,7 @@ public class JidanciApi {
 
     @GetMapping("/searchWords")
     List<Danci> searchWords(String searchWords) {
-        return jidanciRepository.findByNameLike("%"+searchWords+"%");
+        return jidanciRepository.findByNameLike("%"+searchWords.trim()+"%");
     }
 
     @DeleteMapping("/danci/deleteById/{id}")
@@ -227,9 +227,7 @@ public class JidanciApi {
 
                 }
             }
-            map.put(danci.getName(),danci);
         }
-
 
         return (List<Danci>) jidanciRepository.saveAll(dicts);
     }
