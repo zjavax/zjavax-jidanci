@@ -77,6 +77,21 @@
             <version>4.5.13</version>
         </dependency>
 
+        <!--stanford nlp core-->
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <version>4.5.4</version>
+        </dependency>
+        <!--stanford nlp model-->
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <version>4.5.4</version>
+            <classifier>models</classifier>
+        </dependency>
+
+
     </dependencies>
 
 	<build>

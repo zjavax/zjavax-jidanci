@@ -1,5 +1,10 @@
 package cn.zjavax.zjavaxjidanci;
 
+import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.pipeline.Annotation;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.util.CoreMap;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -8,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+// TODO 单词尾字母排序：目的是为了单词后缀一样的排在一起
 
 @RestController()
 public class JidanciApi {
@@ -232,10 +238,9 @@ public class JidanciApi {
         return (List<Danci>) jidanciRepository.saveAll(dicts);
     }
 
-
     // 按行 分割
-    @PostMapping ("/addArticle")
-    public void addArticle(@RequestBody Input input) {
+    @PostMapping ("/addArticle2")
+    public void addArticle2(@RequestBody Input input) {
         list = (List<Danci>) jidanciRepository.findAll();
         for (Danci danci : list) {
             map.put(danci.getName(),danci);
@@ -272,7 +277,43 @@ public class JidanciApi {
 
         jidanciRepository.saveAll(danciList);
         map.clear();
+    }
 
+    // 斯坦福 词性还原
+    @PostMapping ("/addArticle")
+    public void addArticle(@RequestBody Input input) {
+        // 设置属性
+        Properties props = new Properties();
+        props.setProperty("annotators", "tokenize, ssplit, pos, lemma");
+        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+
+        String text = input.getArticle();
+        Annotation document = new Annotation(text);
+
+        // 运行pipeline
+        pipeline.annotate(document);
+
+        List<CoreMap> words = document.get(CoreAnnotations.SentencesAnnotation.class);
+
+        // 获取每个单词的原型，并统计出现次数
+        Map<String, Integer> wordCountMap = new HashMap<>();
+
+        for(CoreMap wordTemp: words) {
+            for (CoreLabel token: wordTemp.get(CoreAnnotations.TokensAnnotation.class)) {
+                String word = token.get(CoreAnnotations.TextAnnotation.class);
+                if(word.matches("[a-zA-Z]+")){ // 只输出英文单词，去掉标点符号
+                    String originalForm = token.get(CoreAnnotations.LemmaAnnotation.class);
+                    Danci danciRow = new Danci();
+                    danciRow.setName(originalForm.toLowerCase(Locale.ROOT));
+                    danciRow.setDifficulty(11);
+                    try{
+                        jidanciRepository.save(danciRow);
+                    }catch (Exception e){
+//                        System.out.println(e);
+                    }
+                }
+            }
+        }
 
     }
 
