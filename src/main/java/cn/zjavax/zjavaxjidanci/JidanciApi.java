@@ -305,7 +305,7 @@ public class JidanciApi {
                     String originalForm = token.get(CoreAnnotations.LemmaAnnotation.class);
                     Danci danciRow = new Danci();
                     danciRow.setName(originalForm.toLowerCase(Locale.ROOT));
-                    danciRow.setDifficulty(11);
+                    danciRow.setDifficulty(1010);
                     try{
                         jidanciRepository.save(danciRow);
                     }catch (Exception e){

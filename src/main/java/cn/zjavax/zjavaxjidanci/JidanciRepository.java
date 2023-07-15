@@ -1,11 +1,11 @@
 package cn.zjavax.zjavaxjidanci;
 
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface JidanciRepository extends CrudRepository<Danci, Integer> {
+public interface JidanciRepository extends JpaRepository<Danci, Integer> {
 
 
     List<Danci> findByDifficulty(int difficulty, Sort sort);

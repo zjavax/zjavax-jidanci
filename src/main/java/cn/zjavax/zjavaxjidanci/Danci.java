@@ -15,8 +15,10 @@ import java.util.Properties;
 
 @Entity
 //@Table(name="danci")
-//@Table(name="danci3")  // 文章 your-cardano-onboarding-guide
-@Table(name="ada_article2") // what-is-cardano-cardano-101
+//@Table(name="danci3")  // 文章
+//@Table(name="ada_article2") // what-is-cardano-cardano-101
+//@Table(name="ada_article3_1and2") // what-is-cardano-cardano-101
+//@Table(name="ada_article4") // one story a day 小学11-12  初中
 //@Table(name="danci2")
 //@Table(name="anhui_zhongkao")  // 安徽中考
 //@Table(name="suffix_word")
@@ -27,6 +29,7 @@ import java.util.Properties;
 //@Table(name="all1")
 //@Table(name="danci3000")
 //@Table(name="nce_2")
+@Table(name="danci850") // http://ogden.basic-english.org/
 public class Danci implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
