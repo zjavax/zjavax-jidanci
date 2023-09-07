@@ -18,7 +18,7 @@ import java.util.Properties;
 //@Table(name="danci3")  // 文章
 //@Table(name="ada_article2") // what-is-cardano-cardano-101
 //@Table(name="ada_article3_1and2") // what-is-cardano-cardano-101
-//@Table(name="ada_article4") // one story a day 小学11-12  初中
+
 //@Table(name="danci2")
 //@Table(name="anhui_zhongkao")  // 安徽中考
 //@Table(name="suffix_word")
@@ -28,16 +28,22 @@ import java.util.Properties;
 //@Table(name="nce_1")
 //@Table(name="all1")
 //@Table(name="danci3000")
+//@Table(name="macmillan7000")
+@Table(name="coca_60000_10000")
+//@Table(name="macmillan7000_suffix")
 //@Table(name="nce_2")
-@Table(name="danci850") // http://ogden.basic-english.org/
+//@Table(name="danci850") // http://ogden.basic-english.org/
+//@Table(name="ada_article4") // one story a day 小学11-12  初中
+//@Table(name="youtube_chat") // ada_article4 只需要这里面不需要的单词
 public class Danci implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
     public  String name;
     public  String trans;
-    public  int know = 0;
+    public  int know = 0;  // 大于1 等于 认识，每认识一次就+1，一旦不认识就 置零
     public int difficulty = 0;
+    @Transient
     public  String notes;
 
     // 表名
