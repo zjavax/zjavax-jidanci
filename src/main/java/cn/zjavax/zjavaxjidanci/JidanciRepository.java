@@ -9,6 +9,7 @@ public interface JidanciRepository extends JpaRepository<Danci, Integer> {
 
 
     List<Danci> findByDifficulty(int difficulty, Sort sort);
+    List<Danci> findByDifficulty(int difficulty);
 //    List<Danci>  findByDifficulty(int difficulty);
     List<Danci> findByNameLike(String name);
 //    findByDifficultyByOrderByKnowDesc

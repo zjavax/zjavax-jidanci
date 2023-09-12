@@ -25,24 +25,24 @@ public class JidanciApi {
 //    public static Set<String> set = new HashSet<>();
     public static Map<String,Danci> map = new HashMap<>();
 
-
-//    @Autowired
-//    private EasydanciRepository  easydanciRepository;
-
     @GetMapping("/getDanci")
     List<Danci> getDanci(@RequestParam(value = "difficulty", required = false) int difficulty,
                          @RequestParam(value = "sort", required = false) String sort) {
         if ("desc".equals(sort)){
-            return jidanciRepository.findByDifficulty(difficulty, Sort.by("know").descending());
+            return jidanciRepository.findByDifficulty(difficulty, Sort.by("name").descending());
+//            return jidanciRepository.findByDifficulty(difficulty, Sort.by("know").descending());
         }else if("asc".equals(sort)){
-            return jidanciRepository.findByDifficulty(difficulty, Sort.by("know").ascending());
+            return jidanciRepository.findByDifficulty(difficulty, Sort.by("name").ascending());
+//            return jidanciRepository.findByDifficulty(difficulty, Sort.by("know").ascending());
         }else if("no".equals(sort)){
-            List<Danci> danciList = jidanciRepository.findByDifficulty(difficulty, Sort.by("name").ascending());
+            List<Danci> danciList = jidanciRepository.findByDifficulty(difficulty);
             if(difficulty == 10){
                 printDanci(danciList);
             }
-
             return danciList;
+        }else if("1".equals(sort)){
+            return jidanciRepository.findByDifficulty(difficulty, Sort.by("id").descending());
+
         }
         return new ArrayList<>();
     }
@@ -120,6 +120,13 @@ public class JidanciApi {
 
 
                 danciList.add(danciRow);
+                try{
+                    jidanciRepository.save(danciRow);
+                }catch (Exception e){
+
+                }
+
+
 //                if (!list.contains(danciRow)){
 //                    danciList.add(danciRow);
 //                }
@@ -130,7 +137,7 @@ public class JidanciApi {
 
         }
 
-        jidanciRepository.saveAll(danciList);
+//        jidanciRepository.saveAll(danciList);
 
     }
 
@@ -216,15 +223,16 @@ public class JidanciApi {
 
     @PostMapping("/addAll")
 //    @ResponseBody
-    public List<Danci> addAll(@RequestBody List<Danci> dicts){
-        list = (List<Danci>) jidanciRepository.findAll();
+    public void addAll(@RequestBody List<Danci> dicts){
+        list = jidanciRepository.findAll();
         for (Danci danci : list) {
             for(Danci d:dicts){
+                d.name = d.name.toLowerCase(Locale.ROOT);
                 if (danci.name.equalsIgnoreCase(d.name)){
                     d.setId(danci.getId());
-                    d.setKnow(danci.getKnow());
+//                    d.setKnow(danci.getKnow());
                     d.setDifficulty(danci.getDifficulty());
-                    d.setNotes(danci.getNotes());
+//                    d.setNotes(danci.getNotes());
                     if(StringUtils.isEmpty(danci.getTrans())){
 //                        d.setTrans(d.getTrans());
                     } else {
@@ -235,7 +243,7 @@ public class JidanciApi {
             }
         }
 
-        return (List<Danci>) jidanciRepository.saveAll(dicts);
+         jidanciRepository.saveAll(dicts);
     }
 
     // 按行 分割
@@ -305,7 +313,7 @@ public class JidanciApi {
                     String originalForm = token.get(CoreAnnotations.LemmaAnnotation.class);
                     Danci danciRow = new Danci();
                     danciRow.setName(originalForm.toLowerCase(Locale.ROOT));
-                    danciRow.setDifficulty(1010);
+                    danciRow.setDifficulty(500);
                     try{
                         jidanciRepository.save(danciRow);
                     }catch (Exception e){
