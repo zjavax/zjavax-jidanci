@@ -1,0 +1,34 @@
+Document: ID=sample-english.txt (2 sentences, 14 tokens)
+
+Sentence #1 (8 tokens):
+President Barack Obama was born in Hawaii.
+
+Tokens:
+[Text=President CharacterOffsetBegin=0 CharacterOffsetEnd=9 PartOfSpeech=NNP Lemma=President NamedEntityTag=TITLE]
+[Text=Barack CharacterOffsetBegin=10 CharacterOffsetEnd=16 PartOfSpeech=NNP Lemma=Barack NamedEntityTag=PERSON]
+[Text=Obama CharacterOffsetBegin=17 CharacterOffsetEnd=22 PartOfSpeech=NNP Lemma=Obama NamedEntityTag=PERSON]
+[Text=was CharacterOffsetBegin=23 CharacterOffsetEnd=26 PartOfSpeech=VBD Lemma=be NamedEntityTag=O]
+[Text=born CharacterOffsetBegin=27 CharacterOffsetEnd=31 PartOfSpeech=VBN Lemma=bear NamedEntityTag=O]
+[Text=in CharacterOffsetBegin=32 CharacterOffsetEnd=34 PartOfSpeech=IN Lemma=in NamedEntityTag=O]
+[Text=Hawaii CharacterOffsetBegin=35 CharacterOffsetEnd=41 PartOfSpeech=NNP Lemma=Hawaii NamedEntityTag=STATE_OR_PROVINCE]
+[Text=. CharacterOffsetBegin=41 CharacterOffsetEnd=42 PartOfSpeech=. Lemma=. NamedEntityTag=O]
+
+Extracted the following NER entity mentions:
+President	TITLE	-
+Barack Obama	PERSON	PERSON:0.9998671791145186
+Hawaii	STATE_OR_PROVINCE	LOCATION:0.9995331589862407
+
+Sentence #2 (6 tokens):
+He was elected in 2008.
+
+Tokens:
+[Text=He CharacterOffsetBegin=44 CharacterOffsetEnd=46 PartOfSpeech=PRP Lemma=he NamedEntityTag=O]
+[Text=was CharacterOffsetBegin=47 CharacterOffsetEnd=50 PartOfSpeech=VBD Lemma=be NamedEntityTag=O]
+[Text=elected CharacterOffsetBegin=51 CharacterOffsetEnd=58 PartOfSpeech=VBN Lemma=elect NamedEntityTag=O]
+[Text=in CharacterOffsetBegin=59 CharacterOffsetEnd=61 PartOfSpeech=IN Lemma=in NamedEntityTag=O]
+[Text=2008 CharacterOffsetBegin=62 CharacterOffsetEnd=66 PartOfSpeech=CD Lemma=2008 NamedEntityTag=DATE NormalizedNamedEntityTag=2008]
+[Text=. CharacterOffsetBegin=66 CharacterOffsetEnd=67 PartOfSpeech=. Lemma=. NamedEntityTag=O]
+
+Extracted the following NER entity mentions:
+2008	DATE	DATE:0.9896573658093907
+He	PERSON	-

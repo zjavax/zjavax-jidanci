@@ -38,3 +38,4 @@ target
 .project
 logs
 *.log
+/english.properties

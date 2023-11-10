@@ -12,3 +12,5 @@ public class ZjavaxJidanciApplication {
 	}
 
 }
+
+// mvn clean install -DskipTests
